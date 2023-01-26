@@ -1,0 +1,15 @@
+.profile{
+  width: 100%;
+  display: flex;
+  justify-content: flex-start
+}
+.headerLink{
+  margin-right: 5%;
+  font-size: 25px;
+  align-self: stretch;
+}
+.avatar{
+  margin-left: auto;
+  margin-right: 2%;
+
+}

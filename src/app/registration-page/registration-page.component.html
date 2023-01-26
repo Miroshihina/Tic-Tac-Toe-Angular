@@ -1,0 +1,23 @@
+<form [formGroup]="form">
+  <mat-form-field appearance="standard">
+    <mat-label>Username</mat-label>
+    <input matInput [formControl]="username">
+    <mat-error *ngIf="username.hasError('min')">
+      The value is lower than the minimum
+    </mat-error>
+    <mat-error *ngIf="username.hasError('max')">
+      The value is greater than the maximum
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field appearance="standard">
+    <mat-label>Password</mat-label>
+    <input matInput [formControl]="password">
+    <mat-error *ngIf="password.hasError('min')">
+      The value is lower than the minimum
+    </mat-error>
+    <mat-error *ngIf="password.hasError('max')">
+      The value is greater than the maximum
+    </mat-error>
+  </mat-form-field>
+  <button mat-button (click)="onSubmit()">Send</button>
+</form>
