@@ -41,29 +41,27 @@ export class AuthService {
     };
     let postRequest = this.http.post<Token>(this.urlLogin, user, requestOptions).pipe(
       tap(token => {
-        localStorage.setItem(ACCESS_TOKEN_KEY, token.Value);
-        this.userAuthorizedChange.next(true);
+          localStorage.setItem(ACCESS_TOKEN_KEY, token.Value);
+          this.userAuthorizedChange.next(true);
+          localStorage.setItem("isUserAuthorized", "true");
         }
       ));
     return postRequest;
   }
 
-  getCurrentUser() {
-    if (this.tokenService.getJWTToken() != null) {
-      return this.http.get<{ username: string }>(this.urlUser, {headers: this.tokenService.getHeadersWithToken()});
-    }
-    return null;
-  }
 
   checkIsUserAuthorized(): boolean {
-    let userName;
-    if (this.getCurrentUser() != null) {
-      // @ts-ignore
-      this.getCurrentUser().subscribe(x => userName = x.username);
-    } else return false
-    if (userName != null) {
-      return true;
-    } else return false;
-
+    let storageValue = localStorage.getItem("isUserAuthorized")
+    if (storageValue == "true") {
+      return true
+    }
+    return false;
+  }
+  testCheck(): boolean {
+    let storageValue = localStorage.getItem(ACCESS_TOKEN_KEY)
+    if (storageValue != null) {
+      return true
+    }
+    return false;
   }
 }
