@@ -1,10 +1,13 @@
-<div class="profile">
-
-  <a class="headerLink" [routerLink]="['/profile']">Profile</a>
+<div *ngIf="!isUserAuthorized; else unset" class="profile">
   <a class="headerLink" [routerLink]="['/register']">Registration</a>
   <a class="headerLink" [routerLink]="['/login']">Login</a>
-  <img *ngIf="!isUserAuthorized; else unset" class="avatar" src="assets/images/avatarIconAnAuthorized.png" width="50" height="50">
-  <ng-template #unset>
-    <img class="avatar" src="assets/images/avatarIcon.png" width="50" height="50">
-  </ng-template>
+  <img class="avatar" src="assets/images/avatarIconAnAuthorized.png" width="50" height="50">
 </div>
+
+<ng-template #unset>
+  <div class="profile">
+    <a class="headerLink" [routerLink]="['/profile']">Profile</a>
+    <img class="avatar" src="assets/images/avatarIcon.png" width="50" height="50">
+  </div>
+</ng-template>
+
