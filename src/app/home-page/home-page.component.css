@@ -1,0 +1,13 @@
+.starGameButtonContainer{
+  display: flex;
+  margin: auto;
+  padding: 0;
+  flex-direction: row;
+  justify-content: center;
+}
+.starGameButton{
+  margin-top: 15%;
+  width: 20%;
+  height: 100px;
+  font-size: 30px;
+}
