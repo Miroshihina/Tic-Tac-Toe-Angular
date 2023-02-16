@@ -7,6 +7,7 @@ export class TokenService {
   public getHeadersWithToken() {
     // create authorization header with jwt token
     let currentUser = localStorage.getItem(ACCESS_TOKEN_KEY);
+    console.log(currentUser)
     let token = JSON.parse(JSON.stringify(currentUser));
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',

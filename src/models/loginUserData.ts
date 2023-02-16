@@ -1,10 +1,10 @@
-export class User {
+export class LoginUserData {
 
   get UserName(): string {
     return this._UserName;
   }
 
-  get Id(): string {
+  get Password(): string {
     return this._Password;
   }
 

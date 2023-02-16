@@ -15,12 +15,12 @@ export class LoginPageComponent implements OnInit {
   form: FormGroup;
   username: FormControl;
   password: FormControl;
-  loginSubject: BehaviorSubject<Token>;
+  loginSubject: BehaviorSubject<string>;
 
   constructor(private auth: AuthService) {
     this.username = this.getFormControl();
     this.password = this.getFormControl();
-    this.loginSubject = new BehaviorSubject<Token>(new Token());
+    this.loginSubject = new BehaviorSubject<string>("");
   }
 
   private getFormControl() {

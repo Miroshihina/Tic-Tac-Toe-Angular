@@ -15,10 +15,5 @@ export class HomePageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.checkIsUserAuthorized()
-  }
-
-  checkIsUserAuthorized(): void{
-    this.IsUserAuthorizedOutput.emit(this.authService.checkIsUserAuthorized())
   }
 }

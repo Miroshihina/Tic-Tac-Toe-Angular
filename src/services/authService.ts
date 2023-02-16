@@ -1,10 +1,11 @@
 import {Injectable} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {JwtHelperService} from "@auth0/angular-jwt";
 import {BehaviorSubject, Observable, tap} from "rxjs";
 import {TokenService} from "./tokenService";
-import {User} from "../models/user";
+import {LoginUserData} from "../models/loginUserData";
 import {Token} from "../models/token";
+import {Router} from "@angular/router";
 
 export const ACCESS_TOKEN_KEY = "my top secret key";
 
@@ -15,53 +16,56 @@ export class AuthService {
 
   urlLogin: string = "https://localhost:44335/Auth/login";
 
-  urlUser: string = "https://localhost:44335/Auth/homePage";
+  urlUser: string = "https://localhost:44335/Auth/profile";
 
   http: HttpClient;
   jwtHelper: JwtHelperService;
   tokenService: TokenService;
+  private router: Router;
 
-  userAuthorizedChange: BehaviorSubject<any> = new BehaviorSubject<any>(false);
-
-  constructor(http: HttpClient, jwtHelper: JwtHelperService, tokenService: TokenService) {
+  constructor(http: HttpClient, jwtHelper: JwtHelperService, tokenService: TokenService, router: Router) {
     this.http = http;
     this.jwtHelper = jwtHelper;
     this.tokenService = tokenService;
+    this.router = router;
   }
 
-  register(user: User): Observable<Token> {
+  register(user: LoginUserData): Observable<Token> {
     let postRequest = this.http.post<Token>(this.urlRegister, user);
     return postRequest;
   }
 
-  login(user: User): Observable<Token> {
+  login(user: LoginUserData): Observable<string> {
     const requestOptions: Object = {
       /* other options here */
       responseType: 'text'
     };
-    let postRequest = this.http.post<Token>(this.urlLogin, user, requestOptions).pipe(
+    let postRequest = this.http.post<string>(this.urlLogin, user, requestOptions).pipe(
       tap(token => {
-          localStorage.setItem(ACCESS_TOKEN_KEY, token.Value);
-          this.userAuthorizedChange.next(true);
-          localStorage.setItem("isUserAuthorized", "true");
+          localStorage.setItem(ACCESS_TOKEN_KEY, token);
         }
       ));
     return postRequest;
   }
 
-
   checkIsUserAuthorized(): boolean {
-    let storageValue = localStorage.getItem("isUserAuthorized")
-    if (storageValue == "true") {
-      return true
-    }
-    return false;
-  }
-  testCheck(): boolean {
     let storageValue = localStorage.getItem(ACCESS_TOKEN_KEY)
     if (storageValue != null) {
       return true
     }
     return false;
+  }
+
+  getCurrentUser() {
+    let userName = this.http.get<{ username: string }>(this.urlUser, {headers: this.tokenService.getHeadersWithToken()});
+    return userName;
+  }
+//TODO доделать запрос с получением побед/поражений
+  sendQueryUserName(userName: string) {
+    this.router.navigate(
+      ['/profile'],
+
+      {queryParams: {userName: userName}}
+    );
   }
 }
