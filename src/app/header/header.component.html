@@ -5,9 +5,13 @@
 </div>
 
 <ng-template #unset>
-  <div class="profile">
-    <a class="headerLink" [routerLink]="['/profile']">Profile</a>
-    <img class="avatar" src="assets/images/avatarIcon.png" width="50" height="50">
-  </div>
+  <header>
+    <mat-toolbar color="primary">
+      <div class="profile">
+        <a class="headerLink" [routerLink]="['/profile']">Profile</a>
+        <img class="avatar" src="assets/images/avatarIcon.png" width="50" height="50">
+      </div>
+    </mat-toolbar>
+  </header>
 </ng-template>
 

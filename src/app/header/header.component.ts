@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {AuthService} from "../../services/authService";
+import {MatToolbarModule} from "@angular/material/toolbar";
 
 @Component({
   selector: 'app-header',

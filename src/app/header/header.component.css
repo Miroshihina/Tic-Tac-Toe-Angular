@@ -5,8 +5,14 @@
 }
 .headerLink{
   margin-right: 5%;
-  font-size: 25px;
+  font-size: 40px;
   align-self: stretch;
+  margin-top: 1%;
+  color: white;
+  text-decoration: none;
+}
+.a:visited{
+  color: red;
 }
 .avatar{
   margin-left: auto;

@@ -19,6 +19,7 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {TokenService} from "../services/tokenService";
 import {HttpClientModule} from "@angular/common/http";
 import {GameService} from "../services/gameService";
+import {MatToolbarModule} from "@angular/material/toolbar";
 
 export function tokenGetter() {
   return localStorage.getItem(ACCESS_TOKEN_KEY);
@@ -56,6 +57,7 @@ const routes: Routes = [
     }),
     ReactiveFormsModule,
     HttpClientModule,
+    MatToolbarModule,
   ],
   providers: [AuthService, TokenService, GameService,],
   bootstrap: [AppComponent]
