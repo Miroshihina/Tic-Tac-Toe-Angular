@@ -35,6 +35,16 @@ export class AuthService {
     return postRequest;
   }
 
+  exit(): void {
+    localStorage.removeItem(ACCESS_TOKEN_KEY);
+    this.navigateToHomePaige();
+  }
+  private navigateToHomePaige(): void{
+    this.router.navigate(
+      [''],
+    ).then(r => window.location.reload());
+
+  }
   login(user: LoginUserData): Observable<string> {
     const requestOptions: Object = {
       /* other options here */
@@ -43,6 +53,7 @@ export class AuthService {
     let postRequest = this.http.post<string>(this.urlLogin, user, requestOptions).pipe(
       tap(token => {
           localStorage.setItem(ACCESS_TOKEN_KEY, token);
+          this.navigateToHomePaige();
         }
       ));
     return postRequest;
@@ -60,6 +71,7 @@ export class AuthService {
     let userName = this.http.get<{ username: string }>(this.urlUser, {headers: this.tokenService.getHeadersWithToken()});
     return userName;
   }
+
 //TODO доделать запрос с получением побед/поражений
   sendQueryUserName(userName: string) {
     this.router.navigate(

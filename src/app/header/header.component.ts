@@ -10,13 +10,22 @@ import {MatToolbarModule} from "@angular/material/toolbar";
 export class HeaderComponent implements OnInit {
   authService: AuthService;
 
-  @Input() isUserAuthorized: boolean = false;
+  isAvatarIconActive: boolean = false;
+
+  isUserAuthorized: boolean = false;
 
   constructor(authService: AuthService) {
     this.authService = authService
   }
 
+  onIconClick(): void{
+    this.isAvatarIconActive = !this.isAvatarIconActive;
+  }
+  onExitLinkClick(): void{
+    this.authService.exit();
+  }
+
   ngOnInit(): void {
     this.isUserAuthorized = this.authService.checkIsUserAuthorized();
-    }
+  }
 }

@@ -1,15 +1,24 @@
-<div *ngIf="!isUserAuthorized; else unset" class="profile">
-  <a class="headerLink" [routerLink]="['/register']">Registration</a>
-  <a class="headerLink" [routerLink]="['/login']">Login</a>
-  <img class="avatar" src="assets/images/avatarIconAnAuthorized.png" width="50" height="50">
-</div>
+<header>
+  <mat-toolbar color="primary">
+    <div *ngIf="!isUserAuthorized; else unset" class="profile">
+      <a class="headerLink" [routerLink]="['/register']">Registration</a>
+      <a class="headerLink" [routerLink]="['/login']">Login</a>
+      <img class="avatar" src="assets/images/avatarIconAnAuthorized.png" width="50" height="50">
+    </div>
+  </mat-toolbar>
+</header>
 
 <ng-template #unset>
   <header>
     <mat-toolbar color="primary">
       <div class="profile">
         <a class="headerLink" [routerLink]="['/profile']">Profile</a>
-        <img class="avatar" src="assets/images/avatarIcon.png" width="50" height="50">
+        <div class="avatar">
+          <img (click)=onIconClick() class="authAvatar" src="assets/images/avatarIcon.png" width="50" height="50">
+          <div *ngIf="isAvatarIconActive" class="exitLink">
+            <p (click)=onExitLinkClick()>Выйти</p>
+          </div>
+        </div>
       </div>
     </mat-toolbar>
   </header>
