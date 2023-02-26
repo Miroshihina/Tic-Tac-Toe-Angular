@@ -11,7 +11,7 @@
   </mat-form-field>
   <mat-form-field appearance="standard">
     <mat-label>Password</mat-label>
-    <input matInput [formControl]="password">
+    <input matInput type="password" [formControl]="password">
     <mat-error *ngIf="password.hasError('min')">
       The value is lower than the minimum
     </mat-error>

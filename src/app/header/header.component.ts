@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {AuthService} from "../../services/authService";
-import {MatToolbarModule} from "@angular/material/toolbar";
+import {ACCESS_TOKEN_KEY, AuthService} from "../../services/authService";
+import {BehaviorSubject} from "rxjs";
 
 @Component({
   selector: 'app-header',
@@ -12,20 +12,27 @@ export class HeaderComponent implements OnInit {
 
   isAvatarIconActive: boolean = false;
 
-  isUserAuthorized: boolean = false;
+  isUserAuthorized: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor(authService: AuthService) {
     this.authService = authService
   }
 
-  onIconClick(): void{
+  onIconClick(): void {
     this.isAvatarIconActive = !this.isAvatarIconActive;
   }
-  onExitLinkClick(): void{
+
+  onExitLinkClick(): void {
     this.authService.exit();
+    this.isAvatarIconActive = false;
   }
 
   ngOnInit(): void {
-    this.isUserAuthorized = this.authService.checkIsUserAuthorized();
+    const accessTokenKey = localStorage.getItem(ACCESS_TOKEN_KEY);
+    this.isUserAuthorized.next(accessTokenKey != null);
+
+    this.authService.isUserAuthorized.subscribe(x =>{
+      this.isUserAuthorized.next(x);
+    } );
   }
 }

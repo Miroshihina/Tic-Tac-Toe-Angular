@@ -15,12 +15,10 @@ export class LoginPageComponent implements OnInit {
   form: FormGroup;
   username: FormControl;
   password: FormControl;
-  loginSubject: BehaviorSubject<string>;
 
   constructor(private auth: AuthService) {
     this.username = this.getFormControl();
     this.password = this.getFormControl();
-    this.loginSubject = new BehaviorSubject<string>("");
   }
 
   private getFormControl() {
@@ -35,8 +33,7 @@ export class LoginPageComponent implements OnInit {
   }
 
   onSubmit(): void {
-    let login = this.auth.login(this.form.value);
-    login.subscribe(x => {this.loginSubject.next(x); console.log("LoginSuccess")})
+    this.auth.login(this.form.value).subscribe();
   }
 
 }

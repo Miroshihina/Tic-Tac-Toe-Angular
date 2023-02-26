@@ -1,6 +1,6 @@
 <header>
   <mat-toolbar color="primary">
-    <div *ngIf="!isUserAuthorized; else unset" class="profile">
+    <div *ngIf="!isUserAuthorized.value; else unset" class="profile">
       <a class="headerLink" [routerLink]="['/register']">Registration</a>
       <a class="headerLink" [routerLink]="['/login']">Login</a>
       <img class="avatar" src="assets/images/avatarIconAnAuthorized.png" width="50" height="50">

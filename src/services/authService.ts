@@ -1,13 +1,18 @@
 import {Injectable} from "@angular/core";
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {JwtHelperService} from "@auth0/angular-jwt";
-import {BehaviorSubject, Observable, tap} from "rxjs";
+import {BehaviorSubject, Observable, Subject, tap} from "rxjs";
 import {TokenService} from "./tokenService";
 import {LoginUserData} from "../models/loginUserData";
 import {Token} from "../models/token";
 import {Router} from "@angular/router";
 
 export const ACCESS_TOKEN_KEY = "my top secret key";
+
+interface ILoginResult {
+  token: string;
+  success: boolean;
+}
 
 @Injectable()
 export class AuthService {
@@ -21,6 +26,7 @@ export class AuthService {
   http: HttpClient;
   jwtHelper: JwtHelperService;
   tokenService: TokenService;
+  isUserAuthorized: Subject<boolean> = new Subject<boolean>();
   private router: Router;
 
   constructor(http: HttpClient, jwtHelper: JwtHelperService, tokenService: TokenService, router: Router) {
@@ -37,34 +43,28 @@ export class AuthService {
 
   exit(): void {
     localStorage.removeItem(ACCESS_TOKEN_KEY);
-    this.navigateToHomePaige();
+    this.navigateToHomePage();
+    this.isUserAuthorized.next(false);
   }
-  private navigateToHomePaige(): void{
-    this.router.navigate(
-      [''],
-    ).then(r => window.location.reload());
 
+  private navigateToHomePage(): void {
+    this.router.navigate(['']);
   }
-  login(user: LoginUserData): Observable<string> {
-    const requestOptions: Object = {
-      /* other options here */
-      responseType: 'text'
-    };
-    let postRequest = this.http.post<string>(this.urlLogin, user, requestOptions).pipe(
-      tap(token => {
-          localStorage.setItem(ACCESS_TOKEN_KEY, token);
-          this.navigateToHomePaige();
+
+  login(user: LoginUserData): Observable<ILoginResult> {
+    let postRequest = this.http.post<ILoginResult>(this.urlLogin, user).pipe(
+      tap(result => {
+          if (result.success) {
+            localStorage.setItem(ACCESS_TOKEN_KEY, result.token);
+            this.navigateToHomePage();
+            this.isUserAuthorized.next(true);
+          } else {
+            this.isUserAuthorized.next(false);
+            //TODO result not success
+          }
         }
       ));
     return postRequest;
-  }
-
-  checkIsUserAuthorized(): boolean {
-    let storageValue = localStorage.getItem(ACCESS_TOKEN_KEY)
-    if (storageValue != null) {
-      return true
-    }
-    return false;
   }
 
   getCurrentUser() {
