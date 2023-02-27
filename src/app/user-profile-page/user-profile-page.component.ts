@@ -20,6 +20,9 @@ export class UserProfilePageComponent implements OnInit {
     this.authService = authService;
     this.gameService = gameService;
   }
+  onExitLinkClick(): void {
+    this.authService.exit();
+  }
 
   ngOnInit(): void {
     this.authService.getCurrentUser().subscribe(x => {this.userName = x.username;  this.authService.sendQueryUserName(this.userName);});
