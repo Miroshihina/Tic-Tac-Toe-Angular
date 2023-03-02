@@ -1,13 +1,17 @@
+/*.starGameButtonContainer{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 85vh;
+}*/
 .starGameButtonContainer{
   display: flex;
-  margin: auto;
-  padding: 0;
-  flex-direction: row;
-  justify-content: center;
+  min-height: 85vh;
 }
 .starGameButton{
-  margin-top: 15%;
   width: 20%;
+  margin: auto;
   height: 100px;
   font-size: 30px;
 }

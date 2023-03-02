@@ -1,0 +1,35 @@
+.userName {
+  font-family: cursive;
+  font-size: 50px;
+}
+p.exitText:active{
+  color: red;
+}
+
+p.exitText:hover{
+  border: solid;
+  padding-top: 10%;
+  padding-bottom: 10%;
+}
+.exitText {
+  font-family: cursive;
+  font-size: 30px;
+  margin-top: 200px;
+}
+
+.userInfo {
+  margin-top: 2%;
+  margin-left: 3%;
+}
+
+.avatar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 200px;
+}
+
+.avatarElement {
+  margin-top: 10%;
+  display: block;
+}
